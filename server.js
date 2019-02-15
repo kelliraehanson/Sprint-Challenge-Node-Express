@@ -50,12 +50,12 @@ server.get(`${projectsurl}:id`, async(req, res) => {
     try{
         const projectsData = await projects.get(id)
         if(projectsData.length === 0) {
-            res.status(404).json(`{error: 'The information could not be found.'}`)
+            res.status(404).json(`{message: 'The information could not be found.'}`)
         } else {
             res.status(200).json(projectsData)
         }
     } catch(err){
-        res.status(500).json(`{error: 'The information could not be found.'}`)
+        res.status(500).json(`{message: 'The information could not be found.'}`)
     }
 });
 
@@ -64,12 +64,12 @@ server.get(`${projectsurl}actions/:projectId`, async(req, res) => {
     try{
         const projectActions = await projects.getProjectActions(projectId)
         if(projectActions.length === 0) {
-            res.status(404).json(`{error: 'Wrong ID'}`)
+            res.status(404).json(`{message: 'Wrong ID'}`)
         } else {
             res.status(200).json(projectActions)
         }
     } catch(err) {
-        res.status(500).json(`{error: 'Something went wrong'}`)
+        res.status(500).json(`{message: 'Something went wrong'}`)
     }
 });
 
@@ -79,15 +79,15 @@ server.post(`${projectsurl}`, async(req, res) => {
     const { name, description } = req.body;
     try{
         if(!name || !description){
-            res.status(404).json(`{error: 'Please enter name and description'}`)
+            res.status(404).json(`{message: 'Please enter name and description'}`)
         } else if (name.length < 1) {
-            res.status(404).json(`{error: 'More letters needed}`)
+            res.status(404).json(`{message: 'More letters needed}`)
         } else {
             const data = await projects.insert({name, description})
             res.status(200).json(data)
         }
     } catch(err) {
-        res.status(500).json(`{error: 'Something went wrong'}`)
+        res.status(500).json(`{message: 'Something went wrong'}`)
     }
 });
 
@@ -122,10 +122,10 @@ server.delete(`${projectsurl}:id`, async(req, res) => {
         if(user){
             res.status(204).json(user)
         } else {
-            res.status(404).json(`{error: 'ID not found'}`)
+            res.status(404).json(`{message: 'ID not found'}`)
         }
     } catch(err) {
-        res.status(500).json(`{error: 'Something went wrong'}`)
+        res.status(500).json(`{message: 'Something went wrong'}`)
     }
 });
 
@@ -141,14 +141,14 @@ server.put(`${projectsurl}:id`, async(req, res) => {
     try {
         const results = await projects.update(id, data)
         if(!name || !description) {
-            res.status(404).json(`{error: 'Please enter information.'}`)
+            res.status(404).json(`{message: 'Please enter information.'}`)
         } else if(name.length < 1) {
-            res.status(404).json(`{error: 'More letters needed'}`)
+            res.status(404).json(`{message: 'More letters needed'}`)
         } else {
             res.status(200).json(results)
         }
     } catch(err) {
-        res.status(500).json(`{error: 'Something went wrong'}`)
+        res.status(500).json(`{message: 'Something went wrong'}`)
     }
 });
 
@@ -163,7 +163,7 @@ server.get(actionsurl, async(req, res) => {
         const actionsData = await actions.get()
         res.status(200).json(actionsData)
     }catch(err){
-        res.status(500).json(`{error: 'Something went wrong'}`)
+        res.status(500).json(`{message: 'Something went wrong'}`)
     }
 });
 
@@ -172,12 +172,12 @@ server.get(`${actionsurl}:id`, async(req, res) => {
     try{
         const actionsData = await actions.get(id)
         if(actionsData.length === 0) {
-            res.status(404).json(`{error: 'Action not found'}`)
+            res.status(404).json(`{message: 'Action not found'}`)
         } else {
             res.status(200).json(actionsData)
         }
     } catch(err){
-        res.status(500).json(`{error: 'Action not found'}`)
+        res.status(500).json(`{message: 'Action not found'}`)
     }
 });
 
@@ -188,15 +188,15 @@ server.post(`${actionsurl}`, async(req, res) => {
     const { project_id, description, notes } = req.body;
     try{
         if(!project_id || !description || !notes ){
-            res.status(404).json(`{error: 'Please provide more information'}`)
+            res.status(404).json(`{message: 'Please provide more information'}`)
         } else if (description.length > 128) {
-            res.status(404).json(`{error: 'More letters needed'}`)
+            res.status(404).json(`{message: 'More letters needed'}`)
         } else {
             const data = await actions.insert({project_id, description, notes})
             res.status(200).json(data)
         }
     } catch(err) {
-        res.status(500).json(`{error: 'Something went wrong'}`)
+        res.status(500).json(`{message: 'Something went wrong'}`)
     }
 });
 
@@ -212,10 +212,10 @@ server.delete(`${actionsurl}:id`, async(req, res) => {
         if(user){
             res.status(204).json(user)
         } else {
-            res.status(404).json(`{error: 'Id not found'}`)
+            res.status(404).json(`{message: 'Id not found'}`)
         }
     } catch(err) {
-        res.status(500).json(`{error: 'Something went wrong'}`)
+        res.status(500).json(`{message: 'Something went wrong'}`)
     }
 });
 
@@ -230,14 +230,14 @@ server.put(`${actionsurl}:id`, async(req, res) => {
     try {
         const results = await actions.update(id, data)
         if(!project_id || !description) {
-            res.status(404).json(`{error: 'More info needed'}`)
+            res.status(404).json(`{message: 'More info needed'}`)
         } else if(description.length > 128) {
-            res.status(404).json(`{error: 'More letters needed'}`)
+            res.status(404).json(`{message: 'More letters needed'}`)
         } else {
             res.status(200).json(results)
         }
     } catch(err) {
-        res.status(500).json(`{error: 'Sorry something went wrong'}`)
+        res.status(500).json(`{message: 'Sorry something went wrong'}`)
     }
 });
 
